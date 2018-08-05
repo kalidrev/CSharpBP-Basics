@@ -1,5 +1,7 @@
-﻿using System;
- 
+﻿using Acme.Common;
+using static Acme.Common.LoggingService;
+using System;
+
 namespace Acme.Biz
 {
     /// <summary>
@@ -58,6 +60,13 @@ namespace Acme.Biz
 
         public string SayHello()
         {
+            var vendor = new Vendor();
+            vendor.SendWelcomeEmail("Message from Product");
+
+            var emailService = new EmailService();
+            var confirmation = emailService.SendMessage("New Product", this.ProductName, "sales@abc.com");
+            var result = LogAction("saying Hello");
+
             return "Hello " + ProductName + " (" + ProductId + "): " + Description;
         }
 
