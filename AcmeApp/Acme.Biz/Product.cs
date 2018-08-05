@@ -9,6 +9,8 @@ namespace Acme.Biz
     /// </summary>
     public class Product
     {
+        public const double InchesPerMeter = 39.37;
+
         #region Constructors
 
         public Product()
@@ -71,6 +73,15 @@ namespace Acme.Biz
             set { productVendor = value; }
         }
 
+        private DateTime? availabilityDate;
+
+        public DateTime? AvailabilityDate
+        {
+            get { return availabilityDate; }
+            set { availabilityDate = value; }
+        }
+
+
 
         #endregion
 
@@ -85,7 +96,11 @@ namespace Acme.Biz
             var confirmation = emailService.SendMessage("New Product", this.ProductName, "sales@abc.com");
             var result = LogAction("saying Hello");
 
-            return "Hello " + ProductName + " (" + ProductId + "): " + Description;
+            return "Hello " + ProductName + 
+                " (" + ProductId + "): " + 
+                Description +
+                " Available on: " +
+                AvailabilityDate?.ToShortDateString();
         }
 
         #endregion
