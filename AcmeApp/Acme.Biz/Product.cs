@@ -39,6 +39,8 @@ namespace Acme.Biz
 
         #region Properties
 
+        public decimal Cost { get; set; }
+
 
         private string productName;
 
@@ -119,6 +121,14 @@ namespace Acme.Biz
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Calculates the suggested retail price
+        /// </summary>
+        /// <param name="markupPercent">Percent used to mark up the cost.</param>
+        /// <returns></returns>
+        public decimal CalculateSuggestedPrice(decimal markupPercent) =>
+                    this.Cost + (this.Cost * markupPercent / 100);
+        
 
         public string SayHello()
         {
@@ -136,10 +146,9 @@ namespace Acme.Biz
                 AvailabilityDate?.ToShortDateString();
         }
 
-        public override string ToString()
-        {
-            return this.ProductName + " (" + this.ProductId + ")";
-        }
+        public override string ToString() =>
+            this.ProductName + " (" + this.ProductId + ")";
+        
 
         #endregion
 
