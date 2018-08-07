@@ -1,4 +1,5 @@
 ﻿using Acme.Common;
+using System;
 
 namespace Acme.Biz
 {
@@ -24,5 +25,38 @@ namespace Acme.Biz
                                                         this.Email);
             return confirmation;
         }
+
+        /// <summary>
+        /// Sends a product order to the vendor.
+        /// </summary>
+        /// <param name="product">Product to order.</param>
+        /// <param name="quantity">Quantity of the product to order.</param>
+        /// <returns></returns>
+        public OperationResult PlaceOrder(Product product, int quantity)
+        {
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
+            if (quantity <= 0)
+                throw new ArgumentOutOfRangeException(nameof(quantity));
+
+            var success = false;
+
+            var orderText = "Order from Acme, Inc" + Environment.NewLine +
+                            "Product: " + product.ProductCode + Environment.NewLine +
+                            "Quantity: " + quantity;
+
+            var emailService = new EmailService();
+            var confirmation = emailService.SendMessage("New Order", orderText, this.Email);
+
+            if (confirmation.StartsWith("Message sent:"))
+            {
+                success = true;
+            }
+            var operationResult = new OperationResult(success, orderText);
+
+            return operationResult;
+        }
+
     }
+
 }
