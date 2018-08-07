@@ -108,6 +108,20 @@ namespace Acme.Biz.Tests
             // Expected exception
         }
 
-        
+        [TestMethod()]
+        public void PlaceOrderTest_WithAddress()
+        {
+            //Arrange
+            var vendor = new Vendor();
+            var product = new Product(1, "Saw", "");
+            var expected = new OperationResult(true, "Test With Address");
+
+            //Act
+            var actual = vendor.PlaceOrder(product, 12, true, false);
+
+            //Assert
+            Assert.AreEqual(expected.Success, actual.Success);
+            Assert.AreEqual(expected.Message, actual.Message);
+        }
     }
 }
