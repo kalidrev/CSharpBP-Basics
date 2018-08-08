@@ -9,8 +9,11 @@ namespace Acme.Biz
     /// </summary>
     public class Product
     {
+
+        #region Constants and Readonly Fields
         public const double InchesPerMeter = 39.37;
         public readonly decimal MinimumPrice;
+        #endregion
 
         #region Constructors
 
@@ -100,7 +103,7 @@ namespace Acme.Biz
             set { productVendor = value; }
         }
 
-        public string ProductCode => this.Category + "-" + this.SequenceNumber;
+        public string ProductCode => $"{this.Category}-{this.SequenceNumber:0000}";
 
         private DateTime? availabilityDate;
 

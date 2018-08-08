@@ -1,5 +1,6 @@
 ﻿using Acme.Common;
 using System;
+using System.Text;
 
 namespace Acme.Biz
 {
@@ -8,13 +9,18 @@ namespace Acme.Biz
     /// </summary>
     public class Vendor 
     {
+        #region Enums
         public enum IncludeAddress { Yes, No };
         public enum SendCopy { Yes, No };
+        #endregion Enums
 
+        #region Properties
         public int VendorId { get; set; }
         public string CompanyName { get; set; }
         public string Email { get; set; }
+        #endregion Properties
 
+        #region Methods
         /// <summary>
         /// Sends an email to welcome a new vendor.
         /// </summary>
@@ -72,22 +78,23 @@ namespace Acme.Biz
 
             var success = false;
 
-            var orderText = "Order from Acme, Inc" + Environment.NewLine +
+            var orderTextBuilder = new StringBuilder("Order from Acme, Inc" + Environment.NewLine +
                             "Product: " + product.ProductCode + Environment.NewLine +
-                            "Quantity: " + quantity;
+                            "Quantity: " + quantity);
 
             if (deliverBy.HasValue)
             {
-                orderText += System.Environment.NewLine +
-                    "Deliver By: " + deliverBy.Value.ToString("d");
+                orderTextBuilder.Append(System.Environment.NewLine +
+                    "Deliver By: " + deliverBy.Value.ToString("d"));
             }
 
             if (!String.IsNullOrWhiteSpace(instructions))
             {
-                orderText += System.Environment.NewLine +
-                    "Instructions: " + instructions;
+                orderTextBuilder.Append(System.Environment.NewLine +
+                    "Instructions: " + instructions);
             }
 
+            var orderText = orderTextBuilder.ToString();
             var emailService = new EmailService();
             var confirmation = emailService.SendMessage("New Order", orderText, this.Email);
 
@@ -100,6 +107,37 @@ namespace Acme.Biz
             return operationResult;
         }
 
-    }
+        public override string ToString()
+        {
+            string vendorInfo = "Vendor: " + this.CompanyName;
+            string result;
+           
+            result = vendorInfo?.ToLower();
+            result = vendorInfo?.ToUpper();
+            result = vendorInfo?.Replace("Vendor", "Supplier");
 
-}
+            var length = vendorInfo?.Length;
+            var index = vendorInfo?.IndexOf(":");
+            var begins = vendorInfo?.StartsWith("Vendor");
+
+            return vendorInfo;
+        }
+
+        public string PrepareDirections()
+        {
+            var directions = @"Insert \r\n to define a new line";
+            return directions;
+        }
+
+        public string PrepareDirectionsOnTwoLines()
+        {
+            var directions = "First do this" + Environment.NewLine +
+                                "Then do that";
+            return directions;
+        }
+
+        #endregion Methods
+
+    } //end class
+
+}//end namespace
