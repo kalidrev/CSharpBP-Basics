@@ -20,6 +20,8 @@ namespace Acme.Biz
 
         public Product()
         {
+            this.MinimumPrice = .96m;
+            this.Category = "Tools";
             //var colorOptions = new List<string>();
             //colorOptions.Add("Red");
             //colorOptions.Add("Espresso");
