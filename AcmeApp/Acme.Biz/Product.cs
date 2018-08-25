@@ -1,5 +1,6 @@
 ﻿using Acme.Common;
 using static Acme.Common.LoggingService;
+using System.Collections.Generic;
 using System;
 
 namespace Acme.Biz
@@ -19,32 +20,17 @@ namespace Acme.Biz
 
         public Product()
         {
-            Console.WriteLine("Product instance created");
-            //this.ProductVendor = new Vendor();
-            this.MinimumPrice = .96m;
-            this.Category = "Tools";
-            // var colorOptions = new string[4];
-            // colorOptions[0] = "Red";
-            // colorOptions[1] = "Espresso";
-            // colorOptions[2] = "White";
-            // colorOptions[3] = "Navy";
+            //var colorOptions = new List<string>();
+            //colorOptions.Add("Red");
+            //colorOptions.Add("Espresso");
+            //colorOptions.Add("White");
+            //colorOptions.Add("Navy");
+            //colorOptions.Insert(2, "Purple");
+            //colorOptions.Remove("White");
 
-            string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
-            Console.WriteLine(colorOptions[1]);
+            var colorOptions = new List<string>() { "Red", "Espresso", "White", "Navy" };
 
-            var browIindex = Array.IndexOf(colorOptions, "Espresso");
-
-            colorOptions.SetValue("Blue", 3);
-
-            for (int i = 0; i < colorOptions.Length; i++)
-            {
-                colorOptions[i] = colorOptions[i].ToLower();
-            }
-
-            foreach (var color in colorOptions)
-            {
-                Console.WriteLine($"The color is {color}");
-            }
+            Console.WriteLine(colorOptions);
         }
 
         public Product(int productId, string productName, string description) : this()
