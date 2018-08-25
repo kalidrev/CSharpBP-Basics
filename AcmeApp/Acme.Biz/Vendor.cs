@@ -43,7 +43,7 @@ namespace Acme.Biz
         /// <param name="includeAddress">True to include the shipping address.</param>
         /// <param name="sendCopy">True to send a copy of the email to the current user.</param>
         /// <returns>Success flag and order text</returns>
-        public OperationResult PlaceOrder(Product product, int quantity, 
+        public OperationResult<bool> PlaceOrder(Product product, int quantity, 
                                             IncludeAddress includeAddress,
                                             SendCopy sendCopy)
         {
@@ -51,7 +51,7 @@ namespace Acme.Biz
             if (includeAddress == IncludeAddress.Yes) orderText += " With Address";
             if (sendCopy == SendCopy.Yes) orderText += " With Copy";
 
-            var operationResult = new OperationResult(true, orderText);
+            var operationResult = new OperationResult<bool>(true, orderText);
             return operationResult;
         }
 
@@ -63,7 +63,7 @@ namespace Acme.Biz
         /// <param name="deliverBy">Requested delivery date.</param>
         /// <param name="instructions">Delivery Instructions</param>
         /// <returns></returns>
-        public OperationResult PlaceOrder(Product product, int quantity, 
+        public OperationResult<bool> PlaceOrder(Product product, int quantity, 
                                             DateTimeOffset? deliverBy = null,
                                             string instructions = "standard delivery")
         {
@@ -102,7 +102,7 @@ namespace Acme.Biz
             {
                 success = true;
             }
-            var operationResult = new OperationResult(success, orderText);
+            var operationResult = new OperationResult<bool>(success, orderText);
 
             return operationResult;
         }
