@@ -34,7 +34,7 @@ namespace Acme.Biz
         /// Retrieves all of the approved vendors
         /// </summary>
         /// <returns></returns>
-        public List<Vendor> Retrieve()
+        public IEnumerable<Vendor> Retrieve()
         {
             if (vendors == null)
             {
@@ -52,31 +52,22 @@ namespace Acme.Biz
         }
 
         /// <summary>
-        /// Retrieves all of the approved vendors
+        /// Retrieves all of the approved vendors, one at a time
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, Vendor> RetrieveWithKeys()
+        public IEnumerable<Vendor> RetrieveWithIterator()
         {
-            var vendors = new Dictionary<string, Vendor>()
-            {
-                { "ABC Corp", new Vendor() { VendorId=5, CompanyName="ABC Corp", Email="abc@abc.com" } },
-                { "XYZ Inc", new Vendor() {  VendorId=8, CompanyName="XYZ Inc", Email="xyz@xyz.com" } }
-            };
+            // Get the data from the database
+            this.Retrieve();
 
-            foreach (var element in vendors)
+            foreach (var vendor in vendors)
             {
-                var vendor = element.Value;
-                var key = element.Key;
-                Console.WriteLine($"Key: {key} Value: {vendor}");
+                Console.WriteLine($"Vendor Id: {vendor.VendorId}");
+                yield return vendor;
             }
-
-            //foreach (var vendor in vendors.Values)
-            //{
-            //    Console.WriteLine(vendor);
-            //}
-
-            return vendors;
         }
+
+       
 
         public bool Save(Vendor vendor)
         {

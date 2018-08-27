@@ -1,5 +1,6 @@
 ﻿using Acme.Common;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Acme.Biz
@@ -131,6 +132,27 @@ namespace Acme.Biz
             var operationResult = new OperationResult<bool>(success, orderText);
 
             return operationResult;
+        }
+
+        /// <summary>
+        /// Sends an email to a set of vendors.
+        /// </summary>
+        /// <param name="vendors">Collection of vendors</param>
+        /// <param name="message">Message to send</param>
+        /// <returns></returns>
+        public static List<string> SendEmail(ICollection<Vendor> vendors, string message)
+        {
+            var confirmations = new List<string>();
+            var emailService = new EmailService();
+            Console.WriteLine(vendors.Count);
+            foreach (var vendor in vendors)
+            {
+                var subject = "Important message for: " + vendor.CompanyName;
+                var confirmation = emailService.SendMessage(subject, message, vendor.Email);
+
+                confirmations.Add(confirmation);
+            }
+            return confirmations;
         }
 
         public override string ToString()
